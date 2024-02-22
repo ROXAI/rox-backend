@@ -88,7 +88,7 @@ const BusinessService = new Schema<IService>(
   }
 );
 
-export const UserBusinessSchema = new Schema<IUserBusiness>(
+const UserBusinessSchema = new Schema<IUserBusiness>(
   {
     profileId: { type: ObjectId, ref: "Profile", required: true },
     businessName: { type: String, required: true }, //index
@@ -132,6 +132,7 @@ const UserBusinessArticleSchema = new Schema<IUserBusinessArticles>(
 );
 
 export const FBUserModel = models.FBUser || model("FBUser", FBUser);
+export const IGUserModel = models.IGUser || model("IGUser", IGUser);
 export const ProfileModel = models.Profile || model("Profile", ProfileSchema);
 export const UserBusiness =
   models.UserBusiness || model("UserBusiness", UserBusinessSchema);
