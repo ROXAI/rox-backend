@@ -131,6 +131,11 @@ const UserBusinessArticleSchema = new Schema<IUserBusinessArticles>(
   }
 );
 
+const sessionCache = new Schema({
+  profileId: { type: ObjectId, ref: "Profile", required: true },
+  userBusinessId: { type: ObjectId, ref: "UserBusiness", required: true },
+});
+
 export const FBUserModel = models.FBUser || model("FBUser", FBUser);
 export const IGUserModel = models.IGUser || model("IGUser", IGUser);
 export const ProfileModel = models.Profile || model("Profile", ProfileSchema);
@@ -150,3 +155,5 @@ export const AdPropmotionContentEntry =
 
 export const SelectedAdEntry =
   models.SelectedAd || model("SelectedAd", SelectedAd);
+
+export const SessionCacheEntry = models.sessionCache || model("sessionCache", sessionCache)
