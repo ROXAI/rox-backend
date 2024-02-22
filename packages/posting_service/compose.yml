@@ -1,0 +1,10 @@
+services:
+  api:
+    build: 
+      context: ./files
+      dockerfile: Dockerfile
+    image: rox_cronjob_12_compose
+    ports:
+      - 9000:8080
+
+
