@@ -8,14 +8,22 @@ import {
   UserBusinessArticles,
 } from "../types/interface/business-data";
 
-export interface IFBUser extends Document {
-  profileId: ObjectId;
-  userId: string;
+interface tokenManager {
   accessToken: string;
+  exp: number;
+  isValid: boolean;
+}
+
+export interface IFBUser extends Document {
+  userBusinessId: ObjectId;
+  userId: string;
+  tokenManager: tokenManager;
+  isConnected: boolean;
 }
 
 export interface ISocialMediaAccounts extends Document {
   facebook: ObjectId;
+  instagram: ObjectId;
   twitter: ObjectId;
 }
 

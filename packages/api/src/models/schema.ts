@@ -13,11 +13,30 @@ import { adContentStatus, postingStatus } from "../types/enum";
 
 const ObjectId = Schema.Types.ObjectId;
 
+const tokenManager = new Schema({
+  accessToken: { type: String },
+  exp: { type: Number },
+  isValid: { type: Boolean, default: false },
+});
+
 const FBUser = new Schema<IFBUser>(
   {
-    profileId: { type: ObjectId, required: true },
+    userBusinessId: { type: ObjectId, ref: "UserBusiness", required: true },
     userId: { type: String, required: true },
-    accessToken: { type: String, required: true },
+    tokenManager: { type: tokenManager, required: true },
+    isConnected: { type: Boolean, default: false },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const IGUser = new Schema<IFBUser>(
+  {
+    userBusinessId: { type: ObjectId, ref: "UserBusiness", required: true },
+    userId: { type: String, required: true },
+    tokenManager: { type: tokenManager, required: true },
+    isConnected: { type: Boolean, default: false },
   },
   {
     timestamps: true,
@@ -26,6 +45,7 @@ const FBUser = new Schema<IFBUser>(
 
 const socialMediaAccountsSchema = new Schema<ISocialMediaAccounts>({
   facebook: { type: ObjectId, ref: "FBUser" },
+  instagram: { type: ObjectId, ref: "IGUser" },
   twitter: { type: ObjectId },
 });
 
