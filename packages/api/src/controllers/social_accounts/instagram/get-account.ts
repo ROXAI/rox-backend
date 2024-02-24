@@ -8,7 +8,7 @@ export const getInstagramAccount = async (
   res: Response
 ) => {
   try {
-    const buinsessId = req.user?.businessID;
+    const buinsessId = req.user?.businessId;
     const data = await IGUserModel.findById(buinsessId).lean();
     return res.status(200).json({ data: data });
   } catch (error: any) {

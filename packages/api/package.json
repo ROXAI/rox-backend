@@ -26,7 +26,8 @@
     "mongoose": "^7.6.3",
     "openai": "^4.13.0",
     "puppeteer": "^21.4.1",
-    "serverless-http": "^3.2.0"
+    "serverless-http": "^3.2.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@grpc/grpc-js": "^1.9.13",

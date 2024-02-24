@@ -1,5 +1,9 @@
 import { SessionCacheEntry } from "../models/schema";
 
+interface sessionCache {
+  profileId: string;
+  userBusinessId: string;
+}
 export class ManageSessionCache {
   protected profileId: string;
 
@@ -15,5 +19,11 @@ export class ManageSessionCache {
       },
       { upsert: true, new: true }
     );
+  };
+
+  getSessionCache = async () => {
+    return (await SessionCacheEntry.findOne({
+      profileId: this.profileId,
+    }).lean()) as sessionCache;
   };
 }
