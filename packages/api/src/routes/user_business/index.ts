@@ -12,12 +12,18 @@ import { removeProduct } from "../../controllers/user_business/remove-product";
 import { removeService } from "../../controllers/user_business/remove-service";
 import { products } from "../../controllers/user_business/products";
 import { services } from "../../controllers/user_business/services";
+import { activeUserBusiness } from "../../middlewares/sessionCache";
 
 export const router = express.Router();
 
 router.get("/products", FBAuth, products);
 router.get("/services", FBAuth, services);
-router.get("/onboard-business-data", FBAuth, onboardBusinessData);
+router.get(
+  "/onboard-business-data",
+  FBAuth,
+  activeUserBusiness,
+  onboardBusinessData
+);
 router.get("/getOne-buisness-data", FBAuth, BusinessDataOne);
 router.post("/setup-business", FBAuth, businessOverview);
 router.post("/updateOne-business-data", FBAuth, updateUserBusiness);

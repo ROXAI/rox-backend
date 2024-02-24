@@ -15,7 +15,7 @@ export const activeUserBusiness = async (
     if (!data)
       throw { code: "no-businessId-in-cache", message: "something went wrong" };
     req.user = { ...req?.user!, businessID: data?.userBusinessId! };
-    next();
+   return next();
   } catch (error) {
     errorHandler(error, res);
   }

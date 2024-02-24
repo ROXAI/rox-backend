@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { validateObjectFields } from "../../utils/input-validation/user-business";
 import { errorHandler } from "../../helpers/errorHandler";
-import { ProfileModel, UserBusiness } from "../../models/schema";
+import { ProfileModel, SessionCacheEntry, UserBusiness } from "../../models/schema";
 import { convertToObjectId } from "../../utils/convert-to-objectid";
 import { ScrappedDataGPTResponse } from "../../helpers/chat-gpt";
 import { CustomRequest } from "../../types";
@@ -28,6 +28,13 @@ export const businessOverview = async (req: CustomRequest, res: Response) => {
     req.body.profileId = userProfile?._id;
     // req.body.queryString = queryString;
     const data = await UserBusiness.create(req.body);
+    await SessionCacheEntry.findOneAndUpdate(
+      { profileId: req.user?.profileId },
+      {
+        $set: { userBusinessId: data._id },
+      },
+      { upsert: true, new: true }
+    );
     res.status(200).json({ data });
   } catch (error: any) {
     await errorHandler(error, res);
