@@ -16,7 +16,7 @@ const ObjectId = Schema.Types.ObjectId;
 const tokenManager = new Schema({
   accessToken: { type: String },
   exp: { type: Number },
-  isValid: { type: Boolean, default: false },
+  isValid: { type: Boolean, default: true },
 });
 
 const FBUser = new Schema<IFBUser>(
@@ -24,7 +24,7 @@ const FBUser = new Schema<IFBUser>(
     userBusinessId: { type: ObjectId, ref: "UserBusiness", required: true },
     userId: { type: String, required: true },
     tokenManager: { type: tokenManager, required: true },
-    isConnected: { type: Boolean, default: false },
+    isConnected: { type: Boolean, default: true },
   },
   {
     timestamps: true,

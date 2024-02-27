@@ -1,5 +1,4 @@
 import { errorHandler } from "../helpers/errorHandler";
-import { SessionCacheEntry } from "../models/schema";
 import { Response, NextFunction } from "express";
 import { CustomRequest } from "../types";
 import { ManageSessionCache } from "../helpers/manage-session-cache";
