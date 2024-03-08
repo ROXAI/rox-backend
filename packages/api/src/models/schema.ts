@@ -107,7 +107,7 @@ const AdPropmotionContent = new Schema<IAdPromotionContent>(
     sourceArticle: { type: ObjectId, ref: "BusinessArticles" },
     text: { type: String },
     businessId: { type: ObjectId, ref: "UserBusiness" },
-    status: { type: "String", default: adContentStatus.DRAFT },
+    status: { type: "String", default: adContentStatus.ACTIVE },
   },
   {
     timestamps: true,
