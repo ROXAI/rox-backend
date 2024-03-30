@@ -11,11 +11,11 @@ export class ManageSessionCache {
     this.profileId = profileId;
   }
 
-  addBusinessIdToCache = async (businessId: string) => {
+  addBusinessIdToCache = async (businessProfileId: string) => {
     return await SessionCacheEntry.findOneAndUpdate(
       { profileId: this.profileId },
       {
-        $set: { userBusinessId: businessId },
+        $set: { businessProfileId: businessProfileId },
       },
       { upsert: true, new: true }
     );

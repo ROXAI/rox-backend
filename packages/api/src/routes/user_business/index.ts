@@ -13,6 +13,7 @@ import { removeService } from "../../controllers/user_business/remove-service";
 import { products } from "../../controllers/user_business/products";
 import { services } from "../../controllers/user_business/services";
 import { activeUserBusiness } from "../../middlewares/sessionCache";
+import { validateProductInput } from "../../utils/input-validation/productAndServices";
 
 export const router = express.Router();
 
@@ -26,10 +27,28 @@ router.get(
 );
 router.get("/getOne-buisness-data", FBAuth, BusinessDataOne);
 router.post("/setup-business", FBAuth, businessOverview);
-router.post("/updateOne-business-data", FBAuth, updateUserBusiness);
-router.post("/addProduct", FBAuth, addProduct);
+router.post(
+  "/updateOne-business-data",
+  FBAuth,
+  activeUserBusiness,
+  updateUserBusiness
+);
+router.post(
+  "/addProduct",
+  FBAuth,
+  activeUserBusiness,
+  validateProductInput,
+  addProduct
+);
+
+router.post(
+  "/addService",
+  FBAuth,
+  activeUserBusiness,
+  validateProductInput,
+  addService
+);
 router.post("/updateProduct", FBAuth, updateProduct);
-router.post("/addService", FBAuth, addService);
 router.post("/updateService", FBAuth, updateService);
 router.delete("/removeService", FBAuth, removeService);
 router.delete("/removeProduct", FBAuth, removeProduct);

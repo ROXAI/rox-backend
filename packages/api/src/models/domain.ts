@@ -4,7 +4,7 @@ import {
   Product,
   Profile,
   Service,
-  UserBusiness,
+  BusinessProfile,
   UserBusinessArticles,
 } from "../types/interface/business-data";
 
@@ -33,7 +33,9 @@ export interface IProduct extends Document, Product {}
 
 export interface IService extends Document, Service {}
 
-export interface IUserBusiness extends Document, UserBusiness {}
+export interface IBusinessProfile extends Document, BusinessProfile {
+  profileId: ObjectId;
+}
 
 export interface IUserBusinessArticles extends Document, UserBusinessArticles {}
 export interface IAdPromotionContent extends Document, AdPromotionContent {}

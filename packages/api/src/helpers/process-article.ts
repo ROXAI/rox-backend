@@ -1,4 +1,4 @@
-import { IUserBusiness, IUserBusinessArticles } from "../models/domain";
+import { IBusinessProfile, IUserBusinessArticles } from "../models/domain";
 import {
   AdPropmotionContentEntry,
   UserBusiness,
@@ -75,7 +75,7 @@ export class ProcessArticle {
       "businessName",
       "description",
       "additionalDetails",
-    ])) as IUserBusiness;
+    ])) as IBusinessProfile;
 
     if (data?.products?.length !== 0) {
       products = await UserBusinessProductsModel.find({

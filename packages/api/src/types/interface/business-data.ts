@@ -22,8 +22,8 @@ export interface Product {
 
 export interface Service extends Product {}
 
-export interface UserBusiness {
-  profileId: ObjectId;
+export interface BusinessProfile {
+  _id: ObjectId;
   businessName: string;
   description: string;
   additionalDetails: string;

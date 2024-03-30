@@ -6,7 +6,7 @@ import {
   IProfile,
   IService,
   ISocialMediaAccounts,
-  IUserBusiness,
+  IBusinessProfile,
   IUserBusinessArticles,
 } from "./domain";
 import { adContentStatus, postingStatus } from "../types/enum";
@@ -88,7 +88,7 @@ const BusinessService = new Schema<IService>(
   }
 );
 
-const BusinessProfile = new Schema<IUserBusiness>(
+const BusinessProfile = new Schema<IBusinessProfile>(
   {
     profileId: { type: ObjectId, ref: "Profile", required: true },
     businessName: { type: String, required: true }, //index

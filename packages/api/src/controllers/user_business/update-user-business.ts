@@ -13,8 +13,11 @@ interface RequestData {
 export const updateUserBusiness = async (req: CustomRequest, res: Response) => {
   try {
     const requestData: RequestData = req.body;
+    const businessProfileId = req.user?.businessProfileId;
+    if (!businessProfileId)
+      throw new Error("businessProfileId was not provided on the server");
     const data = await UserBusiness.findByIdAndUpdate(
-      convertToObjectId(requestData._id),
+      convertToObjectId(businessProfileId),
       {
         $set: { ...requestData },
       },
