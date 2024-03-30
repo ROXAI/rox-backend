@@ -13,7 +13,7 @@ export interface Profile {
 }
 
 export interface Product {
-  userBusinessId: ObjectId;
+  businessProfileId: ObjectId;
   name: string;
   description: string;
   categories: string[];
@@ -37,7 +37,7 @@ interface adContent {
 }
 
 export interface UserBusinessArticles {
-  businessId: ObjectId;
+  businessProfileId: ObjectId;
   title: string;
   link: string;
   extracted: boolean;
@@ -48,5 +48,5 @@ export interface AdPromotionContent {
   status: adContentStatus;
   text: string;
   sourceArticle: ObjectId;
-  businessId: ObjectId;
+  businessProfileId: ObjectId;
 }

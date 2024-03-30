@@ -15,7 +15,7 @@ interface tokenManager {
 }
 
 export interface IFBUser extends Document {
-  userBusinessId: ObjectId;
+  businessProfileId: ObjectId;
   userId: string;
   tokenManager: tokenManager;
   isConnected: boolean;

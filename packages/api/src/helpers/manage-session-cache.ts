@@ -2,7 +2,7 @@ import { SessionCacheEntry } from "../models/schema";
 
 interface sessionCache {
   profileId: string;
-  userBusinessId: string;
+  businessProfileId: string;
 }
 export class ManageSessionCache {
   protected profileId: string;

@@ -9,8 +9,8 @@ export const onboardBusinessData = async (
 ) => {
   try {
     const profileId = req.user?.profileId || "";
-    const businessID = req.user?.businessId || "";
-    const { onboardData } = new OnboardBusinessData(profileId, businessID);
+    const businessProfileId = req.user?.businessProfileId || "";
+    const { onboardData } = new OnboardBusinessData(profileId, businessProfileId);
     const data = await onboardData();
     return res.status(200).json({ data: data });
   } catch (error: any) {

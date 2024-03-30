@@ -9,11 +9,11 @@ export const createInstagramAccount = async (
   res: Response
 ) => {
   const userData = req.body as typeof IGUserSchemaInput.shape;
-  const buinsessId = req.user?.businessId!;
+  const businessProfileId = req.user?.businessProfileId!;
 
   const IGUser = {
     userId: userData.userId,
-    userBusinessId: buinsessId,
+    businessProfileId: businessProfileId,
     isConnected: true,
     tokenManager: {
       accessToken: userData.accessToken,
@@ -24,7 +24,7 @@ export const createInstagramAccount = async (
   try {
     const data = await IGUserModel.findOneAndUpdate(
       {
-        userBusinessId: buinsessId,
+        businessProfileId: businessProfileId,
       },
       {
         $set: IGUser,

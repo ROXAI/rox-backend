@@ -5,15 +5,15 @@ import type { Response } from "express";
 
 export const services = async (req: CustomRequest, res: Response) => {
   try {
-    const userBusinessId = req.query?.userBusinessId;
+    const businessProfileId = req.user?.businessProfileId;
 
-    if (!userBusinessId)
+    if (!businessProfileId)
       throw {
         code: "business-id-not-found",
         message: "userBusinessId is required as a query params",
       };
 
-    const data = await UserBusinessServiceModel.find({ userBusinessId })
+    const data = await UserBusinessServiceModel.find({ businessProfileId })
       .limit(10)
       .lean();
 

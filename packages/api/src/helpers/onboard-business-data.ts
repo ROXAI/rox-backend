@@ -2,11 +2,11 @@ import { UserBusiness } from "../models/schema";
 
 export class OnboardBusinessData {
   protected profileId: string;
-  protected businessId: string;
+  protected businessProfileId: string;
 
-  constructor(profileId: string, businessId: string) {
+  constructor(profileId: string, businessProfileId: string) {
     this.profileId = profileId;
-    this.businessId = businessId;
+    this.businessProfileId = businessProfileId;
   }
   protected getUserBusinesses = async () => {
     return await UserBusiness.find({
@@ -16,7 +16,7 @@ export class OnboardBusinessData {
 
   onboardData = async () => {
     const lastBusinessActive = await UserBusiness.findById(
-      this.businessId
+      this.businessProfileId
     ).populate({ path: "profileId", select: ["email"] }).lean();
     const documents = await this.getUserBusinesses();
     if (documents.length === 0)

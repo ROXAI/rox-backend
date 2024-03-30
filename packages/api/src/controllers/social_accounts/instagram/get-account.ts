@@ -8,9 +8,9 @@ export const getInstagramAccount = async (
   res: Response
 ) => {
   try {
-    const buinsessId = req.user?.businessId;
+    const businessProfileId = req.user?.businessProfileId;
     const data = await IGUserModel.findOne({
-      userBusinessId: buinsessId,
+      businessProfileId: businessProfileId,
     }).lean();
     return res.status(200).json({ data: data });
   } catch (error: any) {

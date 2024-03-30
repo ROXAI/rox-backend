@@ -16,8 +16,8 @@ import { activeUserBusiness } from "../../middlewares/sessionCache";
 
 export const router = express.Router();
 
-router.get("/products", FBAuth, products);
-router.get("/services", FBAuth, services);
+router.get("/products", FBAuth, activeUserBusiness, products);
+router.get("/services", FBAuth, activeUserBusiness, services);
 router.get(
   "/onboard-business-data",
   FBAuth,

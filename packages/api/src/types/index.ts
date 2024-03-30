@@ -8,7 +8,7 @@ export type User = {
   email_verified?: boolean;
   profileId: string;
   exp: number;
-  businessId: string;
+  businessProfileId: string;
 };
 
 export interface CustomRequest extends Request {

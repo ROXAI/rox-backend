@@ -179,7 +179,7 @@ export class ProcessArticle {
 
     _ads.forEach((element: any) => {
       element.sourceArticle = businessArticle._id;
-      element.businessId = businessArticle.businessId;
+      element.businessProfileId = businessArticle.businessProfileId;
     });
 
     const data = await AdPropmotionContentEntry.create(_ads);

@@ -21,7 +21,7 @@ const tokenManager = new Schema({
 
 const FBUser = new Schema<IFBUser>(
   {
-    userBusinessId: { type: ObjectId, ref: "UserBusiness", required: true },
+    businessProfileId: { type: ObjectId, ref: "BusinessProfile", required: true },
     userId: { type: String, required: true },
     tokenManager: { type: tokenManager, required: true },
     isConnected: { type: Boolean, default: true },
@@ -33,7 +33,7 @@ const FBUser = new Schema<IFBUser>(
 
 const IGUser = new Schema<IFBUser>(
   {
-    userBusinessId: { type: ObjectId, ref: "UserBusiness", required: true },
+    businessProfileId: { type: ObjectId, ref: "BusinessProfile", required: true },
     userId: { type: String, required: true },
     tokenManager: { type: tokenManager, required: true },
     isConnected: { type: Boolean, default: false },
@@ -64,7 +64,7 @@ export const ProfileSchema = new Schema<IProfile>(
 
 const BusinessProduct = new Schema<IProduct>(
   {
-    userBusinessId: { type: ObjectId, ref: "UserBusiness", required: true },
+    businessProfileId: { type: ObjectId, ref: "BusinessProfile", required: true },
     name: { type: String },
     description: { type: String },
     categories: { type: [String] },
@@ -77,7 +77,7 @@ const BusinessProduct = new Schema<IProduct>(
 
 const BusinessService = new Schema<IService>(
   {
-    userBusinessId: { type: ObjectId, ref: "UserBusiness", required: true },
+    businessProfileId: { type: ObjectId, ref: "BusinessProfile", required: true },
     name: { type: String },
     description: { type: String },
     categories: { type: [String] },
@@ -88,7 +88,7 @@ const BusinessService = new Schema<IService>(
   }
 );
 
-const UserBusinessSchema = new Schema<IUserBusiness>(
+const BusinessProfile = new Schema<IUserBusiness>(
   {
     profileId: { type: ObjectId, ref: "Profile", required: true },
     businessName: { type: String, required: true }, //index
@@ -106,7 +106,7 @@ const AdPropmotionContent = new Schema<IAdPromotionContent>(
   {
     sourceArticle: { type: ObjectId, ref: "BusinessArticles" },
     text: { type: String },
-    businessId: { type: ObjectId, ref: "UserBusiness" },
+    businessProfileId: { type: ObjectId, ref: "BusinessProfile" },
     status: { type: "String", default: adContentStatus.ACTIVE },
   },
   {
@@ -116,12 +116,12 @@ const AdPropmotionContent = new Schema<IAdPromotionContent>(
 
 const SelectedAd = new Schema({
   ad: { type: ObjectId, ref: "AdPropmotionContent" },
-  businessId: { type: ObjectId, ref: "UserBusiness" },
+  businessProfileId: { type: ObjectId, ref: "BusinessProfile" },
 });
 
-const UserBusinessArticleSchema = new Schema<IUserBusinessArticles>(
+const BusinessArticle = new Schema<IUserBusinessArticles>(
   {
-    businessId: { type: ObjectId, ref: "UserBusiness" },
+    businessProfileId: { type: ObjectId, ref: "BusinessProfile" },
     title: { type: String, required: true },
     link: { type: String, required: true },
     extracted: { type: Boolean, default: false }, //index
@@ -133,17 +133,17 @@ const UserBusinessArticleSchema = new Schema<IUserBusinessArticles>(
 
 const sessionCache = new Schema({
   profileId: { type: ObjectId, ref: "Profile", required: true },
-  userBusinessId: { type: ObjectId, ref: "UserBusiness", required: true },
+  businessProfileId: { type: ObjectId, ref: "BusinessProfile", required: true },
 });
 
 export const FBUserModel = models.FBUser || model("FBUser", FBUser);
 export const IGUserModel = models.IGUser || model("IGUser", IGUser);
 export const ProfileModel = models.Profile || model("Profile", ProfileSchema);
 export const UserBusiness =
-  models.UserBusiness || model("UserBusiness", UserBusinessSchema);
+  models.UserBusiness || model("BusinessProfile", BusinessProfile);
 export const UserBusinessArticlesModel =
   models.UserBusinessData ||
-  model("BusinessArticles", UserBusinessArticleSchema);
+  model("BusinessArticles", BusinessArticle);
 
 export const UserBusinessProductsModel =
   models.UserBusinessProducts || model("BusinessProducts", BusinessProduct);

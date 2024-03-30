@@ -9,10 +9,10 @@ export const activeUserBusiness = async (
 ) => {
   const { getSessionCache } = new ManageSessionCache(req.user?.profileId!);
   try {
-    const { userBusinessId } = await getSessionCache();
-    if (!userBusinessId)
+    const { businessProfileId } = await getSessionCache();
+    if (!businessProfileId)
       throw { code: "no-businessId-in-cache", message: "something went wrong" };
-    req.user = { ...req?.user!, businessId: userBusinessId };
+    req.user = { ...req?.user!, businessProfileId: businessProfileId };
    return next();
   } catch (error) {
     errorHandler(error, res);
