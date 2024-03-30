@@ -4,18 +4,26 @@ import {
   Product,
   Profile,
   Service,
-  UserBusiness,
+  BusinessProfile,
   UserBusinessArticles,
 } from "../types/interface/business-data";
 
-export interface IFBUser extends Document {
-  profileId: ObjectId;
-  userId: string;
+interface tokenManager {
   accessToken: string;
+  exp: number;
+  isValid: boolean;
+}
+
+export interface IFBUser extends Document {
+  businessProfileId: ObjectId;
+  userId: string;
+  tokenManager: tokenManager;
+  isConnected: boolean;
 }
 
 export interface ISocialMediaAccounts extends Document {
   facebook: ObjectId;
+  instagram: ObjectId;
   twitter: ObjectId;
 }
 
@@ -25,7 +33,9 @@ export interface IProduct extends Document, Product {}
 
 export interface IService extends Document, Service {}
 
-export interface IUserBusiness extends Document, UserBusiness {}
+export interface IBusinessProfile extends Document, BusinessProfile {
+  profileId: ObjectId;
+}
 
 export interface IUserBusinessArticles extends Document, UserBusinessArticles {}
 export interface IAdPromotionContent extends Document, AdPromotionContent {}

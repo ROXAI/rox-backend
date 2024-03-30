@@ -23,7 +23,7 @@ export const geUserBusinessAndAdContentBatch = async (
         $lookup: {
           from: "adpropmotioncontents",
           localField: "_id",
-          foreignField: "businessId",
+          foreignField: "businessProfileId",
           as: "lookupresult",
         },
       },

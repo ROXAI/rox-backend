@@ -2,7 +2,6 @@ import { geUserBusinessAndAdContentBatch } from "./helpers/get-business";
 import { postContentToSocialMedia } from "./helpers/post-content";
 import { connectDB } from "./models";
 import { disconnectDB } from "./models/initializeDB";
-import { ShedulerTestEntry } from "./models/schema";
 
 import "dotenv/config";
 connectDB();

@@ -1,4 +1,4 @@
-import { Schema, model, models, Types } from "mongoose";
+import { Schema, model, models } from "mongoose";
 import {
   IAdPromotionContent,
   IFBUser,
@@ -6,18 +6,37 @@ import {
   IProfile,
   IService,
   ISocialMediaAccounts,
-  IUserBusiness,
+  IBusinessProfile,
   IUserBusinessArticles,
 } from "./domain";
 import { adContentStatus, postingStatus } from "../types/enums";
 
-const ObjectId = Types.ObjectId;
+const ObjectId = Schema.Types.ObjectId;
+
+const tokenManager = new Schema({
+  accessToken: { type: String },
+  exp: { type: Number },
+  isValid: { type: Boolean, default: true },
+});
 
 const FBUser = new Schema<IFBUser>(
   {
-    profileId: { type: ObjectId, required: true },
+    businessProfileId: { type: ObjectId, ref: "BusinessProfile", required: true },
     userId: { type: String, required: true },
-    accessToken: { type: String, required: true },
+    tokenManager: { type: tokenManager, required: true },
+    isConnected: { type: Boolean, default: true },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const IGUser = new Schema<IFBUser>(
+  {
+    businessProfileId: { type: ObjectId, ref: "BusinessProfile", required: true },
+    userId: { type: String, required: true },
+    tokenManager: { type: tokenManager, required: true },
+    isConnected: { type: Boolean, default: false },
   },
   {
     timestamps: true,
@@ -26,6 +45,7 @@ const FBUser = new Schema<IFBUser>(
 
 const socialMediaAccountsSchema = new Schema<ISocialMediaAccounts>({
   facebook: { type: ObjectId, ref: "FBUser" },
+  instagram: { type: ObjectId, ref: "IGUser" },
   twitter: { type: ObjectId },
 });
 
@@ -44,7 +64,7 @@ export const ProfileSchema = new Schema<IProfile>(
 
 const BusinessProduct = new Schema<IProduct>(
   {
-    userBusinessId: { type: ObjectId, ref: "UserBusiness", required: true },
+    businessProfileId: { type: ObjectId, ref: "BusinessProfile", required: true },
     name: { type: String },
     description: { type: String },
     categories: { type: [String] },
@@ -57,7 +77,7 @@ const BusinessProduct = new Schema<IProduct>(
 
 const BusinessService = new Schema<IService>(
   {
-    userBusinessId: { type: ObjectId, ref: "UserBusiness", required: true },
+    businessProfileId: { type: ObjectId, ref: "BusinessProfile", required: true },
     name: { type: String },
     description: { type: String },
     categories: { type: [String] },
@@ -68,14 +88,14 @@ const BusinessService = new Schema<IService>(
   }
 );
 
-export const UserBusinessSchema = new Schema<IUserBusiness>(
+const BusinessProfile = new Schema<IBusinessProfile>(
   {
     profileId: { type: ObjectId, ref: "Profile", required: true },
     businessName: { type: String, required: true }, //index
     description: { type: String, required: false },
     additionalDetails: { type: String },
     queryString: { type: String },
-    postingStatus: { type: String, default: postingStatus.NONE }, //index
+    postingStatus: { type: String, default: postingStatus.NONE },
   },
   {
     timestamps: true,
@@ -86,8 +106,8 @@ const AdPropmotionContent = new Schema<IAdPromotionContent>(
   {
     sourceArticle: { type: ObjectId, ref: "BusinessArticles" },
     text: { type: String },
-    businessId: { type: ObjectId, ref: "UserBusiness" },
-    status: { type: "String", default: adContentStatus.DRAFT },
+    businessProfileId: { type: ObjectId, ref: "BusinessProfile" },
+    status: { type: "String", default: adContentStatus.ACTIVE },
   },
   {
     timestamps: true,
@@ -96,12 +116,12 @@ const AdPropmotionContent = new Schema<IAdPromotionContent>(
 
 const SelectedAd = new Schema({
   ad: { type: ObjectId, ref: "AdPropmotionContent" },
-  businessId: { type: ObjectId, ref: "UserBusiness" },
+  businessProfileId: { type: ObjectId, ref: "BusinessProfile" },
 });
 
-const UserBusinessArticleSchema = new Schema<IUserBusinessArticles>(
+const BusinessArticle = new Schema<IUserBusinessArticles>(
   {
-    businessId: { type: ObjectId, ref: "UserBusiness" },
+    businessProfileId: { type: ObjectId, ref: "BusinessProfile" },
     title: { type: String, required: true },
     link: { type: String, required: true },
     extracted: { type: Boolean, default: false }, //index
@@ -111,20 +131,19 @@ const UserBusinessArticleSchema = new Schema<IUserBusinessArticles>(
   }
 );
 
-const shedularTest = new Schema({
-  test: { type: String },
+const sessionCache = new Schema({
+  profileId: { type: ObjectId, ref: "Profile", required: true },
+  businessProfileId: { type: ObjectId, ref: "BusinessProfile", required: true },
 });
 
-export const ShedulerTestEntry =
-  models.shedularTest || model("shedularTest", shedularTest);
-
 export const FBUserModel = models.FBUser || model("FBUser", FBUser);
+export const IGUserModel = models.IGUser || model("IGUser", IGUser);
 export const ProfileModel = models.Profile || model("Profile", ProfileSchema);
 export const UserBusiness =
-  models.UserBusiness || model("UserBusiness", UserBusinessSchema);
+  models.UserBusiness || model("BusinessProfile", BusinessProfile);
 export const UserBusinessArticlesModel =
   models.UserBusinessData ||
-  model("BusinessArticles", UserBusinessArticleSchema);
+  model("BusinessArticles", BusinessArticle);
 
 export const UserBusinessProductsModel =
   models.UserBusinessProducts || model("BusinessProducts", BusinessProduct);
@@ -136,3 +155,5 @@ export const AdPropmotionContentEntry =
 
 export const SelectedAdEntry =
   models.SelectedAd || model("SelectedAd", SelectedAd);
+
+export const SessionCacheEntry = models.sessionCache || model("sessionCache", sessionCache)
