@@ -8,11 +8,8 @@ export const IGUserSchemaInput = z.object({
 
 export const FBUserSchemaInput = z.object({
   userId: z.string(),
-  isConnected: z.boolean(),
-  tokenManager: z.object({
-    accessToken: z.string(),
-    isValid: z.boolean(),
-  }),
+  accessToken: z.string(),
+  exp: z.number(),
   page: z.object({
     id: z.string(),
     name: z.string(),
