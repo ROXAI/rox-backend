@@ -13,7 +13,7 @@ export const geUserBusinessAndAdContentBatch = async (
   pageNumber = 0
 ): Promise<BusinessAndAdContentResponse[]> => {
   try {
-    const pageLimit = 2;
+    const pageLimit = 10;
     const data: BusinessAndAdContentResponse[] = await UserBusiness.aggregate([
       { $match: { postingStatus: postingStatus.STANDARD } },
       { $sort: { _id: 1 } },

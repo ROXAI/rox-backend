@@ -1,4 +1,4 @@
-import { Product, Service, UserBusiness } from "./business-data";
+import { Product, Service, BusinessProfile } from "./business-data";
 
 export interface GenerateAdDependencyDataType {
   businessId: string;
@@ -7,7 +7,7 @@ export interface GenerateAdDependencyDataType {
   adQuantity: number;
   tone: string;
   businessInfo: Pick<
-    UserBusiness,
+  BusinessProfile,
     "description" | "businessName" | "additionalDetails"
   >;
 }
