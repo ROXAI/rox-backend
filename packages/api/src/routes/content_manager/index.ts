@@ -6,9 +6,15 @@ import { removeAdContent } from "../../controllers/content_management/remove-con
 import { getAds } from "../../controllers/content_management/get-ads";
 import { SelectedAd } from "../../controllers/content_management/selectAd";
 import { getSelectedAds } from "../../controllers/content_management/get-selected-ads";
+import { activeUserBusiness } from "../../middlewares/sessionCache";
 
 export const router = express.Router();
-router.post("/generate-text-content", FBAuth, generateTextContent);
+router.post(
+  "/generate-text-content",
+  FBAuth,
+  activeUserBusiness,
+  generateTextContent
+);
 router.post("/edit-ad-content", FBAuth, EditAdContent);
 router.post("/remove-ad-content", FBAuth, removeAdContent);
 router.post("/add-selected-ad", FBAuth, SelectedAd);

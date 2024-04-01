@@ -9,25 +9,25 @@ export const generateTextContent = async (
   res: Response
 ) => {
   let userId = req.user?.profileId!;
-  const businessId = req.body.businessId
+  const businessProfileId = req.user?.businessProfileId!;
   const requestData = req.body as GenerateAdDependencyDataType;
   const {
     getNotExtractedArticles,
     getArticlesFromJSONAPI,
     generateAdPromosionText,
     stockDBwithArticles,
-  } = new ProcessArticle(userId, businessId, requestData);
+  } = new ProcessArticle(userId, businessProfileId, requestData);
 
   try {
     const processArticles = async (nextPageToken: number): Promise<any> => {
-      if (!businessId) throw new Error("business not recognized");
+      if (!businessProfileId)
+        throw new Error("businessProfileId was not provided on the server");
       const businessArticle = await getNotExtractedArticles();
-
 
       if (!businessArticle) {
         const data = await getArticlesFromJSONAPI(nextPageToken);
         const startIndex = data.queries?.nextPage[0]?.startIndex;
-     
+
         const result = await stockDBwithArticles(startIndex);
         if (!result) return await processArticles(startIndex);
         const adPropmotion = await generateAdPromosionText();
@@ -38,7 +38,7 @@ export const generateTextContent = async (
       const adPropmotion = await generateAdPromosionText();
       return res.status(200).json({ data: adPropmotion });
     };
-    
+
     await processArticles(1);
   } catch (error: any) {
     errorHandler(error, res);

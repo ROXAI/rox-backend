@@ -28,22 +28,22 @@ interface DependencyData {
 }
 export class ProcessArticle {
   private userId: string;
-  private businessId: string;
+  private businessProfileId: string;
   private requestData: GenerateAdDependencyData;
 
   constructor(
     userId: string,
-    businessId: string,
+    businessProfileId: string,
     data: GenerateAdDependencyData
   ) {
     this.userId = userId;
-    this.businessId = businessId;
+    this.businessProfileId = businessProfileId;
     this.requestData = data;
   }
 
   getNotExtractedArticles = async () => {
     const businessArticle = (await UserBusinessArticlesModel.findOne({
-      businessId: convertToObjectId(this.businessId as string),
+      businessProfileId: convertToObjectId(this.businessProfileId as string),
       extracted: false,
     })) as IUserBusinessArticles;
     return businessArticle;
@@ -51,7 +51,7 @@ export class ProcessArticle {
 
   getExtractedArticles = async () => {
     const articleLinks = await UserBusinessArticlesModel.find({
-      businessId: convertToObjectId(this.businessId as string),
+      businessProfileId: convertToObjectId(this.businessProfileId as string),
       extracted: true,
     }).select("link");
     return articleLinks;
@@ -59,7 +59,7 @@ export class ProcessArticle {
 
   getUserBusinessQueryString = async () => {
     const userBusiness = await UserBusiness.findOne({
-      _id: convertToObjectId(this.businessId),
+      _id: convertToObjectId(this.businessProfileId),
     }).select("queryString");
     return userBusiness.queryString as string;
   };
@@ -70,7 +70,7 @@ export class ProcessArticle {
     let products = [];
     let services = [];
     const businessInfo = (await UserBusiness.findOne({
-      _id: convertToObjectId(this.businessId),
+      _id: convertToObjectId(this.businessProfileId),
     }).select([
       "businessName",
       "description",
@@ -119,7 +119,7 @@ export class ProcessArticle {
 
     if (articleLinks.length === 0) {
       GCPJsonAPIArticles.items.forEach(
-        (item: any) => (item.businessId = this.businessId)
+        (item: any) => (item.businessProfileId = this.businessProfileId)
       );
       await UserBusinessArticlesModel.create(GCPJsonAPIArticles.items);
       return true;
@@ -132,7 +132,7 @@ export class ProcessArticle {
       );
 
       if (hasLink) {
-        hasLink.businessId = this.businessId;
+        hasLink.businessProfileId = this.businessProfileId;
         array.push(hasLink);
       }
     });

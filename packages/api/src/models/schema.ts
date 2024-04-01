@@ -8,23 +8,36 @@ import {
   ISocialMediaAccounts,
   IBusinessProfile,
   IUserBusinessArticles,
+  IFBPage,
+  ItokenManager,
 } from "./domain";
 import { adContentStatus, postingStatus } from "../types/enum";
 
 const ObjectId = Schema.Types.ObjectId;
 
-const tokenManager = new Schema({
+const tokenManager = new Schema<ItokenManager>({
   accessToken: { type: String },
   exp: { type: Number },
   isValid: { type: Boolean, default: true },
 });
 
+const FBPage = new Schema<IFBPage>({
+  id: { type: String, require: true },
+  name: { type: String, require: true },
+  access_token: { type: String, require: true },
+});
+
 const FBUser = new Schema<IFBUser>(
   {
-    businessProfileId: { type: ObjectId, ref: "BusinessProfile", required: true },
+    businessProfileId: {
+      type: ObjectId,
+      ref: "BusinessProfile",
+      required: true,
+    },
     userId: { type: String, required: true },
-    tokenManager: { type: tokenManager, required: true },
     isConnected: { type: Boolean, default: true },
+    tokenManager: { type: tokenManager, required: true },
+    page: { type: FBPage, required: true },
   },
   {
     timestamps: true,
@@ -33,7 +46,11 @@ const FBUser = new Schema<IFBUser>(
 
 const IGUser = new Schema<IFBUser>(
   {
-    businessProfileId: { type: ObjectId, ref: "BusinessProfile", required: true },
+    businessProfileId: {
+      type: ObjectId,
+      ref: "BusinessProfile",
+      required: true,
+    },
     userId: { type: String, required: true },
     tokenManager: { type: tokenManager, required: true },
     isConnected: { type: Boolean, default: false },
@@ -64,7 +81,11 @@ export const ProfileSchema = new Schema<IProfile>(
 
 const BusinessProduct = new Schema<IProduct>(
   {
-    businessProfileId: { type: ObjectId, ref: "BusinessProfile", required: true },
+    businessProfileId: {
+      type: ObjectId,
+      ref: "BusinessProfile",
+      required: true,
+    },
     name: { type: String },
     description: { type: String },
     categories: { type: [String] },
@@ -77,7 +98,11 @@ const BusinessProduct = new Schema<IProduct>(
 
 const BusinessService = new Schema<IService>(
   {
-    businessProfileId: { type: ObjectId, ref: "BusinessProfile", required: true },
+    businessProfileId: {
+      type: ObjectId,
+      ref: "BusinessProfile",
+      required: true,
+    },
     name: { type: String },
     description: { type: String },
     categories: { type: [String] },
@@ -142,8 +167,7 @@ export const ProfileModel = models.Profile || model("Profile", ProfileSchema);
 export const UserBusiness =
   models.UserBusiness || model("BusinessProfile", BusinessProfile);
 export const UserBusinessArticlesModel =
-  models.UserBusinessData ||
-  model("BusinessArticles", BusinessArticle);
+  models.UserBusinessData || model("BusinessArticles", BusinessArticle);
 
 export const UserBusinessProductsModel =
   models.UserBusinessProducts || model("BusinessProducts", BusinessProduct);
@@ -156,4 +180,5 @@ export const AdPropmotionContentEntry =
 export const SelectedAdEntry =
   models.SelectedAd || model("SelectedAd", SelectedAd);
 
-export const SessionCacheEntry = models.sessionCache || model("sessionCache", sessionCache)
+export const SessionCacheEntry =
+  models.sessionCache || model("sessionCache", sessionCache);

@@ -8,17 +8,24 @@ import {
   UserBusinessArticles,
 } from "../types/interface/business-data";
 
-interface tokenManager {
+export interface ItokenManager {
   accessToken: string;
   exp: number;
   isValid: boolean;
 }
 
+export interface IFBPage {
+  id: string;
+  name: string;
+  access_token: string;
+}
+
 export interface IFBUser extends Document {
   businessProfileId: ObjectId;
   userId: string;
-  tokenManager: tokenManager;
+  tokenManager: ItokenManager;
   isConnected: boolean;
+  page: IFBPage;
 }
 
 export interface ISocialMediaAccounts extends Document {
