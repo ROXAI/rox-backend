@@ -15,7 +15,7 @@ export const handler = async (page = 0): Promise<any> => {
         if (docs.filteredLookupResult.length === 0)
           return console.log("no more content for", docs._id.toString());
 
-        return postContentToSocialMedia(docs.filteredLookupResult[0]);
+        return postContentToSocialMedia(docs.filteredLookupResult[0], docs.fbuser[0]);
       });
       await Promise.all(promises);
 

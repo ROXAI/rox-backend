@@ -7,26 +7,17 @@ import {
   BusinessProfile,
   UserBusinessArticles,
 } from "../types/interface/business-data";
+import {
+  FBUserField,
+  tokenManager,
+  FBPage,
+} from "../types/interface/social-accounts";
 
-export interface ItokenManager {
-  accessToken: string;
-  exp: number;
-  isValid: boolean;
-}
+export interface ItokenManager extends tokenManager {}
 
-export interface IFBPage {
-  id: string;
-  name: string;
-  access_token: string;
-}
+export interface IFBPage extends FBPage {}
 
-export interface IFBUser extends Document {
-  businessProfileId: ObjectId;
-  userId: string;
-  tokenManager: ItokenManager;
-  isConnected: boolean;
-  page: IFBPage;
-}
+export interface IFBUser extends FBUserField, Document {}
 
 export interface ISocialMediaAccounts extends Document {
   facebook: ObjectId;
