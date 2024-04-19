@@ -7,11 +7,13 @@ export const IGUserSchemaInput = z.object({
   exp: z.number().positive(),
 });
 
-const ProductInputValidation = z.object({
-  name: z.string(),
-  description: z.string(),
-  categories: z.array(z.string()),
-  subCategories: z.array(z.string()),
-});
+const ProductInputValidation = z
+  .object({
+    name: z.string(),
+    description: z.string(),
+    categories: z.array(z.string()),
+    subCategories: z.array(z.string()),
+  })
+  .strict();
 
-export const validateProductInput = validateInput(ProductInputValidation)
+export const validateProductInput = validateInput(ProductInputValidation);

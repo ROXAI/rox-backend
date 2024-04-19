@@ -7,6 +7,7 @@ interface SelectedAdData {
   businessId: string;
   ad: string;
 }
+
 export const SelectedAd = async (req: CustomRequest, res: Response) => {
   try {
     const requestData = req.body as SelectedAdData;
