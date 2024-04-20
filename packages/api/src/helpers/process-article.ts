@@ -160,6 +160,7 @@ export class ProcessArticle {
     business services: <${services}>
     `;
     const articleContent = await getArticleContent(businessArticle.link);
+console.log("dddddddd", articleContent);
 
     const adPropmotion = await generateContentFromSummary(
       articleContent,

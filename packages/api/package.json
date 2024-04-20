@@ -5,7 +5,10 @@
   "main": "src/app.ts",
   "scripts": {
     "dev": "ts-node-dev src/app.ts",
+    "start": "node dist/app.js",
     "populate:db": "ts-node-dev src/scripts",
+    "script:test": "ts-node-dev src/helpers/web-scrapper-api",
+    "build":"tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "module": "ESNext",
@@ -14,8 +17,10 @@
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-ses": "^3.462.0",
-    "axios": "^1.6.1",
+    "article-extractor": "^1.0.2",
+    "axios": "^1.6.8",
     "axios-retry": "^3.9.0",
+    "cheerio": "^1.0.0-rc.12",
     "cookie": "^0.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
