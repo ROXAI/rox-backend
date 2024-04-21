@@ -18,9 +18,18 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
 
 app.get("/", async (req, res) => {
-  res.status(200).json({ data: "data" });
+  res.status(200).json({
+    data: `data working pafectly, ${process.env.TEST_SAM}`,
+    environmentation: process.env.TEST_SAM,
+  });
 });
 
+app.get("/api", async (req, res) => {
+  res.status(200).json({
+    data: `data working pafectly api, ${process.env.TEST_SAM}`,
+    environmentation: process.env.TEST_SAM,
+  });
+});
 
 app.use("/api/v1/automation/fb", FBPagePostAutomationRoute);
 app.use("/api/v1/account", userAccountRoute);

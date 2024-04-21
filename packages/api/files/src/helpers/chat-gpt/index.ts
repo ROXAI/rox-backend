@@ -43,6 +43,9 @@ export class ScrappedDataGPTResponse {
     const appMessage = getAppMessageForGCPSearchQuery(businessInfo);
     const qeuryString = await get_completion_from_messages(appMessage);
     const jsonArray = JSON.parse(qeuryString!);
+    console.log('====================================');
+    console.log(jsonArray);
+    console.log('====================================');
     return jsonArray["q"].join(" OR ");
   };
 }
