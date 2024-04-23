@@ -1,19 +1,17 @@
-import * as cheerio from "cheerio";
-import axios from "axios";
-const test = async () => {
+import { FirebaseAuth } from "../services/firebase";
+const { verifyIdToken } = new FirebaseAuth();
+
+export const tt = async (token: string) => {
   try {
-    const { data } = await axios(
-      "https://www.vogue.com/article/simplified-skincare-routine"
-    );
-    // const data = res.json()
-    const $ = cheerio.load(data);
-    const content = $("article").text();
-    console.log(content);
-  } catch (error) {
-    console.log("scrapper-error", error);
+    const data = await verifyIdToken(token);
+    console.log("====================================");
+    console.log("data", data);
+    console.log("====================================");
+  } catch (error: any) {
+    console.log("====================================");
+    console.log("error", error);
+    console.log("====================================");
   }
 };
 
 
-// https://rsc.byu.edu/latter-day-saint-essentials/articles-faith
-// "https://www.vogue.com/article/simplified-skincare-routine"

@@ -103,6 +103,9 @@ export class ProcessArticle {
     `;
     const { GCP_API_QueryString } = new ScrappedDataGPTResponse();
     const queryString = await GCP_API_QueryString(businessInfos);
+    console.log("====================================");
+    console.log(queryString);
+    console.log("====================================");
     return queryString;
   };
 
@@ -151,23 +154,25 @@ export class ProcessArticle {
     if (!businessArticle) throw new Error("articles needs to be restocked");
     const { getArticleContent } = new WebScrapperAPI();
     const { generateContentFromSummary } = new ScrappedDataGPTResponse();
+    console.log("====started=====");
     const { businessInfo, products, services } = await this.getDependencyData(
       this.requestData
     );
     const userBusiness = `
     business name and description: <${businessInfo?.businessName}\n. ${businessInfo?.description}. ${businessInfo.additionalDetails}>
-    business products: <${products}>\n
-    business services: <${services}>
     `;
+    console.log("====userBusiness===========");
     const articleContent = await getArticleContent(businessArticle.link);
-console.log("dddddddd", articleContent);
-
-    const adPropmotion = await generateContentFromSummary(
+    
+    console.log("====================================");
+      console.log("articleContent");
+      console.log("====================================");
+    const adPropmotions = await generateContentFromSummary(
       articleContent,
       JSON.stringify(userBusiness),
       { tone: this.requestData?.tone, quantity: this.requestData?.adQuantity }
     );
-    const _ads = JSON.parse(adPropmotion!);
+    console.log("dddddddd", adPropmotions);
     await UserBusinessArticlesModel.findByIdAndUpdate(
       businessArticle._id,
       {
@@ -178,12 +183,12 @@ console.log("dddddddd", articleContent);
       }
     );
 
-    _ads.forEach((element: any) => {
+    adPropmotions.forEach((element: any) => {
       element.sourceArticle = businessArticle._id;
       element.businessProfileId = businessArticle.businessProfileId;
     });
 
-    const data = await AdPropmotionContentEntry.create(_ads);
+    const data = await AdPropmotionContentEntry.create(adPropmotions);
     return data;
   };
 }

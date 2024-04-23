@@ -27,13 +27,14 @@ export const generateTextContent = async (
       if (!businessArticle) {
         const data = await getArticlesFromJSONAPI(nextPageToken);
         const startIndex = data.queries?.nextPage[0]?.startIndex;
-
+        console.log("====================================");
+        console.log("businessArticle");
+        console.log("====================================");
         const result = await stockDBwithArticles(startIndex);
         if (!result) return await processArticles(startIndex);
         const adPropmotion = await generateAdPromosionText();
         return res.status(200).json({ data: adPropmotion });
       }
-
       //when article is not empty
       const adPropmotion = await generateAdPromosionText();
       return res.status(200).json({ data: adPropmotion });
